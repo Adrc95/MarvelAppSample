@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.adrc95.marvelappsample.R"/>
+        <variable
+            name="viewModel"
+            type="com.adrc95.marvelappsample.ui.main.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{viewModel.uiState.loading}" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:enabled="@{viewModel.uiState.enabledSearch}"
+            android:alpha="@{viewModel.uiState.enabledSearch ? 1.0f : 0.5f}"
+            app:boxBackgroundMode="outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeColor="?attr/colorControlNormal"
+            app:startIconTint="?attr/colorControlNormal"
+            app:startIconDrawable="@drawable/ic_search"
+            app:endIconDrawable="@drawable/ic_close"
+            app:endIconTint="@color/colorPrimary"
+            app:errorEnabled="false"
+            app:endIconMode="clear_text"
+            app:hintEnabled="false"
+            app:expandedHintEnabled="true"
+            app:hintAnimationEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tieSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:padding="0dp"
+                android:textColor="@color/black"
+                android:hint="@string/hint_search"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onSearchTextChanged(text)}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCharacters"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            app:customDivider="@{R.drawable.divider}"
+            app:filter="@{viewModel.uiState.filterQuery}"
+            app:isMoreItemsLoad="@{viewModel.uiState.moreCharacters}"
+            app:items="@{viewModel.uiState.characters}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilSearch"
+            app:onMoreItems="@{viewModel::fetchMoreCharacters}"
+            tools:itemCount="10"
+            tools:listitem="@layout/view_character" />
+
+        <include
+            layout="@layout/view_error"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:action="@{viewModel::onTryAgainClicked}"
+            app:show="@{viewModel.uiState.serverError}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
