@@ -55,8 +55,7 @@ class CharactersAdapter(private val listener: (Character) -> Unit) :
                     val filteredList = mutableListOf<Character>()
                     val filterPattern = charSequence.toString().lowercase().trim { char -> char <= ' ' }
                     it.forEach { character ->
-                        if (character.name.lowercase().contains(filterPattern) ||
-                            character.description.lowercase().contains(filterPattern)) {
+                        if (character.name.lowercase().contains(filterPattern)) {
                             filteredList.add(character)
                         }
                     }
