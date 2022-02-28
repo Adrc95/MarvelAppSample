@@ -57,4 +57,10 @@ class DetailViewModel @Inject constructor(savedStateHandle: SavedStateHandle,
     private fun onFavoriteError(failure: Failure) {
 
     }
+
+    data class DetailUiState(
+        val loading : Boolean = true,
+        val character : Character? = null,
+    )
+
 }

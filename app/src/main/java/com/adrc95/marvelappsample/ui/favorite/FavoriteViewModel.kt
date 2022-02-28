@@ -60,4 +60,12 @@ private val favoriteCharacters: FavoriteCharacter): ViewModel() {
     fun onTryAgainClicked() {
         getFavoriteCharacters()
     }
+
+    data class FavoriteUiState(
+        val loading : Boolean = true,
+        val characters : List<Character>? = null,
+        val emptyFavorites : Boolean = false,
+        val serverError : Boolean = false,
+    )
+
 }

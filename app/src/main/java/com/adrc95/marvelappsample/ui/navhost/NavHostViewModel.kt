@@ -31,4 +31,9 @@ class NavHostViewModel @Inject constructor(private val changeThemeMode: ChangeTh
         }
     }
 
+    data class NavHostUiState(
+        val mode : ModeType? = null
+    )
+
+
 }

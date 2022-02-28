@@ -6,7 +6,6 @@ import com.adrc95.data.exception.Failure
 import com.adrc95.domain.Character
 import com.adrc95.marvelappsample.data.util.Constants.LIMIT_CHARACTER_OF_PAGE
 import com.adrc95.usecases.GetCharacters
-import com.adrc95.usecases.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -52,4 +51,12 @@ class MainViewModel @Inject constructor(private val getCharacters: GetCharacters
         getCharacters()
     }
 
+    data class MainUiState(
+        val loading : Boolean = true,
+        val characters : List<Character>? = null,
+        val enabledSearch : Boolean = false,
+        val filterQuery : String? = null,
+        val moreCharacters : Boolean = false,
+        val serverError : Boolean = false
+    )
 }
