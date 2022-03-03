@@ -2,21 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <import type="com.adrc95.marvelappsample.ui.common.ModeType"/>
-        <variable
-            name="modeType"
-            type="ModeType" />
-        <variable
-            name="observable"
-            type="com.adrc95.marvelappsample.ui.navhost.NavHostMenuObservable" />
-    </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:observableNavHost="@{observable}"
-        app:darkMode="@{modeType}">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"

@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import arrow.core.some
-import com.adrc95.marvelappsample.BR
 import com.adrc95.marvelappsample.R
 import com.adrc95.marvelappsample.databinding.ActivityNavHostBinding
 import com.adrc95.marvelappsample.databinding.MenuActionDarkmodeBinding
@@ -25,14 +23,14 @@ class NavHostActivity : AppCompatActivity() {
 
     private val menuObservable by lazy { NavHostMenuObservable() }
 
+    private val navHostState by lazy { buildNavHostState() }
+
     private val viewModel: NavHostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         with(binding) {
-            observable = menuObservable
-
             val navController = findNavController(R.id.nav_host_fragment)
             val appBarConfiguration = AppBarConfiguration(
                 setOf(
@@ -46,7 +44,7 @@ class NavHostActivity : AppCompatActivity() {
             bottomNavigation.setupWithNavController(navController)
 
             launchAndCollect(viewModel.uiState){
-                modeType = it.mode
+                manageUiState(it)
             }
         }
     }
@@ -57,17 +55,21 @@ class NavHostActivity : AppCompatActivity() {
         val binding: MenuActionDarkmodeBinding = MenuActionDarkmodeBinding.inflate(layoutInflater)
         binding.apply {
             menuObservable.darkmode
-            onChangeTheme = {
-                it.toString()
-            }
-            menuDarkMode?.apply {
-                actionView = root
-                setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-            }
+            onChangeTheme =  viewModel::onChangeTheme
+        }
+        menuDarkMode?.apply {
+            actionView = binding.root
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         }
         return super.onCreateOptionsMenu(menu)
     }
 
+    private fun manageUiState(state : NavHostViewModel.NavHostUiState) {
+        menuObservable.apply {
+            darkmode = state.mode
+            navHostState.onChangeTheme(state.mode)
+        }
+    }
 
     fun showBottomBar() = with(binding) {
         bottomNavigation.setVisible(true)
