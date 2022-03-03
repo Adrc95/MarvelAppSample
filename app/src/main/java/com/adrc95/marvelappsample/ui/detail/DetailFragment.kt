@@ -33,6 +33,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.detail_menu, menu)
         val menuItemFavorite = menu.findItem(R.id.action_favorite)
 
