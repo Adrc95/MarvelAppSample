@@ -16,7 +16,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override val viewModel: MainViewModel by viewModels()
 
-    private val mainEventState by lazy { buildMainEventState() }
+    private val mainEventState by lazy { buildMainState() }
 
     private val adapter = CharactersAdapter { mainEventState.onCharacterClicked(it) }
 

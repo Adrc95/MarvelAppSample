@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.adrc95.domain.Character
 
-fun Fragment.buildMainEventState(
+fun Fragment.buildMainState(
     navController: NavController = findNavController(),
 ) = MainEventState(navController)
 
