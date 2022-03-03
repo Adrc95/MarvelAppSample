@@ -24,7 +24,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        binding.apply { observable = favoriteMenuObservable }
         (activity as NavHostActivity).hideBottomBar()
 
         viewLifecycleOwner.launchAndCollect(viewModel.uiState) {
@@ -57,6 +56,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     private fun manageUiState(state : DetailViewModel.DetailUiState) = with(binding) {
         loading = state.loading
         character = state.character
+        favoriteMenuObservable.apply {
+            favorite = state.character?.favorite ?: false
+            enabled = true
+        }
     }
 
 }

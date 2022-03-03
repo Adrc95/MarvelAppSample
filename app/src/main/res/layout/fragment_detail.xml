@@ -10,16 +10,11 @@
         <variable
             name="character"
             type="com.adrc95.domain.Character" />
-        <variable
-            name="observable"
-            type="com.adrc95.marvelappsample.ui.detail.FavoriteMenuObservable" />
     </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:observableFavoriteMenu="@{observable}"
-        app:favoriteCharacter="@{character.favorite}"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
