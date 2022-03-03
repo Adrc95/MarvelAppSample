@@ -4,10 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.adrc95.marvelappsample.R"/>
+        <import type="kotlin.jvm.functions.Function0" />
+
+        <import type="kotlin.jvm.functions.Function1" />
+
+        <import type="kotlin.Unit" />
+
+        <import type="com.adrc95.marvelappsample.R" />
+
+        <import type="java.util.List" />
+
         <variable
-            name="viewModel"
-            type="com.adrc95.marvelappsample.ui.main.MainViewModel" />
+            name="loading"
+            type="boolean" />
+
+        <variable
+            name="enabledSearch"
+            type="boolean" />
+
+        <variable
+            name="serverError"
+            type="boolean" />
+
+        <variable
+            name="filterQuery"
+            type="String" />
+
+        <variable
+            name="characters"
+            type="List&lt;com.adrc95.domain.Character>" />
+
+        <variable
+            name="tryAgain"
+            type="Function0&lt;Unit>" />
+
+        <variable
+            name="onSearchTextChanged"
+            type="Function1&lt;CharSequence, Unit>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +48,7 @@
         android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
@@ -25,7 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visible="@{viewModel.uiState.loading}" />
+            app:visible="@{loading}" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSearch"
@@ -34,8 +67,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:enabled="@{viewModel.uiState.enabledSearch}"
-            android:alpha="@{viewModel.uiState.enabledSearch ? 1.0f : 0.5f}"
+            android:alpha="@{enabledSearch ? 1.0f : 0.5f}"
+            android:enabled="@{enabledSearch}"
             app:boxBackgroundMode="outline"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:boxStrokeWidth="1dp"
@@ -61,7 +94,7 @@
                 android:padding="0dp"
                 android:textColor="@color/black"
                 android:hint="@string/hint_search"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.onSearchTextChanged(text)}" />
+                android:onTextChanged="@{(text, start, before, count) -> onSearchTextChanged.invoke(text)}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,15 +105,13 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             app:customDivider="@{R.drawable.divider}"
-            app:filter="@{viewModel.uiState.filterQuery}"
-            app:isMoreItemsLoad="@{viewModel.uiState.moreCharacters}"
-            app:items="@{viewModel.uiState.characters}"
+            app:filter="@{filterQuery}"
+            app:items="@{characters}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilSearch"
-            app:onMoreItems="@{viewModel::fetchMoreCharacters}"
             tools:itemCount="10"
             tools:listitem="@layout/view_character" />
 
@@ -88,8 +119,7 @@
             layout="@layout/view_error"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:action="@{viewModel::onTryAgainClicked}"
-            app:show="@{viewModel.uiState.serverError}"
+            app:show="@{serverError}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

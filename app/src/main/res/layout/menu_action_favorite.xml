@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="kotlin.jvm.functions.Function0" />
+
+        <import type="kotlin.Unit" />
+
         <variable
             name="data"
             type="com.adrc95.marvelappsample.ui.detail.FavoriteMenuObservable"
             />
+
         <variable
-            name="viewmodel"
-            type="com.adrc95.marvelappsample.ui.detail.DetailViewModel"
-            />
+            name="onFavoriteActionClicked"
+            type="Function0&lt;Unit>" />
+
     </data>
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> viewmodel.onFavoriteActionClicked() }"
+        android:onClick="@{() -> onFavoriteActionClicked.invoke() }"
         android:clickable="true"
         android:focusable="true"
         android:enabled="@{data.enabled}"

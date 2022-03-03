@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.viewModels
 import com.adrc95.marvelappsample.databinding.FragmentFavoriteBinding
 import com.adrc95.marvelappsample.ui.common.BaseFragment
+import com.adrc95.marvelappsample.ui.common.launchAndCollect
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,14 +22,24 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             rvCharacters.adapter = adapter
+            tryAgain = viewModel::onTryAgainClicked
         }
+
+        viewLifecycleOwner.launchAndCollect(viewModel.uiState) {
+            manageUiState(it)
+        }
+    }
+
+    private fun manageUiState(state : FavoriteViewModel.FavoriteUiState) = with(binding){
+        loading = state.loading
+        characters = state.characters
+        emptyFavorites = state.emptyFavorites
+        serverError = state.serverError
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
     }
-
-
 
 }

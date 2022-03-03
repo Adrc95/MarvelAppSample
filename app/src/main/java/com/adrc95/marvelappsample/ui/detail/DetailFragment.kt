@@ -8,6 +8,7 @@ import com.adrc95.marvelappsample.R
 import com.adrc95.marvelappsample.databinding.FragmentDetailBinding
 import com.adrc95.marvelappsample.databinding.MenuActionFavoriteBinding
 import com.adrc95.marvelappsample.ui.common.BaseFragment
+import com.adrc95.marvelappsample.ui.common.launchAndCollect
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,10 +24,28 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        binding.apply {
-            observable = favoriteMenuObservable
-        }
+        binding.apply { observable = favoriteMenuObservable }
         (activity as NavHostActivity).hideBottomBar()
+
+        viewLifecycleOwner.launchAndCollect(viewModel.uiState) {
+           manageUiState(it)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.detail_menu, menu)
+        val menuItemFavorite = menu.findItem(R.id.action_favorite)
+
+        val binding: MenuActionFavoriteBinding = MenuActionFavoriteBinding.inflate(layoutInflater)
+        binding.apply {
+            data = favoriteMenuObservable
+            onFavoriteActionClicked = viewModel::onFavoriteActionClicked
+        }
+        menuItemFavorite?.apply {
+            actionView = binding.root
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {
@@ -34,19 +53,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         super.onDestroyView()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.detail_menu, menu)
-        val menuItemFavorite = menu.findItem(R.id.action_favorite)
-        val binding: MenuActionFavoriteBinding = MenuActionFavoriteBinding.inflate(layoutInflater)
-        binding.apply {
-            data = favoriteMenuObservable
-            viewmodel = viewModel
-        }
-        menuItemFavorite?.apply {
-            actionView = binding.root
-            setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-        }
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun manageUiState(state : DetailViewModel.DetailUiState) = with(binding) {
+        loading = state.loading
+        character = state.character
     }
 
 }

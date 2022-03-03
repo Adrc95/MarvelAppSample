@@ -14,6 +14,14 @@ import androidx.core.view.forEach
 import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.bumptech.glide.Glide
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DiffUtil
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
@@ -69,6 +77,18 @@ fun Menu.tint(@ColorInt color: Int = Color.WHITE) {
 
 val Menu.items: List<MenuItem>
     get() = (0 until size()).map { getItem(it) }
+
+fun <T> LifecycleOwner.launchAndCollect(
+    flow: Flow<T>,
+    state: Lifecycle.State = Lifecycle.State.STARTED,
+    body: (T) -> Unit
+) {
+    lifecycleScope.launch {
+        this@launchAndCollect.repeatOnLifecycle(state) {
+            flow.collect(body)
+        }
+    }
+}
 
 fun RecyclerView.addOnScrolledToEnd(onScrolledToEnd: (Int) -> Unit) {
 

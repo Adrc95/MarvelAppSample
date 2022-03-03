@@ -4,11 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
-        <import type="com.adrc95.marvelappsample.R"/>
+        <import type="kotlin.jvm.functions.Function0" />
+        <import type="kotlin.Unit" />
+        <import type="android.view.View" />
+        <import type="java.util.List" />
+        <import type="com.adrc95.marvelappsample.R" />
         <variable
-            name="viewModel"
-            type="com.adrc95.marvelappsample.ui.favorite.FavoriteViewModel" />
+            name="loading"
+            type="boolean" />
+        <variable
+            name="characters"
+            type="List&lt;com.adrc95.domain.Character>" />
+        <variable
+            name="emptyFavorites"
+            type="boolean" />
+        <variable
+            name="serverError"
+            type="boolean" />
+        <variable
+            name="tryAgain"
+            type="Function0&lt;Unit>"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +31,7 @@
         android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
@@ -26,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visible="@{viewModel.uiState.loading}" />
+            app:visible="@{loading}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCharacters"
@@ -35,7 +50,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             app:customDivider="@{R.drawable.divider}"
-            app:items="@{viewModel.uiState.characters}"
+            app:items="@{characters}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,14 +68,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:show="@{viewModel.uiState.emptyFavorites}" />
+            app:show="@{emptyFavorites}" />
 
         <include
             layout="@layout/view_error"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:show="@{viewModel.uiState.serverError}"
-            app:action="@{viewModel::onTryAgainClicked}"
+            app:show="@{serverError}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

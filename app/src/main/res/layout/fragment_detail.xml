@@ -5,9 +5,11 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.adrc95.marvelappsample.ui.detail.DetailViewModel" />
-
+            name="loading"
+            type="boolean" />
+        <variable
+            name="character"
+            type="com.adrc95.domain.Character" />
         <variable
             name="observable"
             type="com.adrc95.marvelappsample.ui.detail.FavoriteMenuObservable" />
@@ -17,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:observableFavoriteMenu="@{observable}"
-        app:favoriteCharacter="@{viewModel.uiState.character.favorite}"
+        app:favoriteCharacter="@{character.favorite}"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +33,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:url="@{viewModel.uiState.character.thumbnail}"
+                app:url="@{character.thumbnail}"
                 tools:background="@color/colorPrimaryDark"
                 tools:ignore="ContentDescription" />
 
@@ -54,7 +56,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@{!viewModel.uiState.character.description.isEmpty() ? viewModel.uiState.character.description : @string/empty_description }"
+                android:text="@{!character.description.isEmpty() ? character.description : @string/empty_description }"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +65,7 @@
                 tools:text="@tools:sample/lorem/random" />
 
             <ProgressBar
-                android:id="@+id/loading"
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
@@ -73,7 +75,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:visible="@{viewModel.uiState.loading}" />
+                app:visible="@{loading}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -8,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import arrow.core.some
 import com.adrc95.marvelappsample.BR
 import com.adrc95.marvelappsample.R
 import com.adrc95.marvelappsample.databinding.ActivityNavHostBinding
 import com.adrc95.marvelappsample.databinding.MenuActionDarkmodeBinding
+import com.adrc95.marvelappsample.ui.common.launchAndCollect
 import com.adrc95.marvelappsample.ui.common.setVisible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +31,6 @@ class NavHostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         with(binding) {
-            setVariable(BR.viewModel, this@NavHostActivity.viewModel)
             observable = menuObservable
 
             val navController = findNavController(R.id.nav_host_fragment)
@@ -43,6 +44,10 @@ class NavHostActivity : AppCompatActivity() {
             setSupportActionBar(toolbar)
             toolbar.setupWithNavController(navController, appBarConfiguration)
             bottomNavigation.setupWithNavController(navController)
+
+            launchAndCollect(viewModel.uiState){
+                modeType = it.mode
+            }
         }
     }
 
@@ -52,7 +57,9 @@ class NavHostActivity : AppCompatActivity() {
         val binding: MenuActionDarkmodeBinding = MenuActionDarkmodeBinding.inflate(layoutInflater)
         binding.apply {
             menuObservable.darkmode
-            viewModel = this@NavHostActivity.viewModel
+            onChangeTheme = {
+                it.toString()
+            }
             menuDarkMode?.apply {
                 actionView = root
                 setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)

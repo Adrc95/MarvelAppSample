@@ -25,7 +25,7 @@ abstract class BaseFragment<VBinding : ViewDataBinding> : Fragment() {
     ): View? {
         _binding = bindView(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.viewModel, viewModel)
+            //setVariable(BR.viewModel, viewModel)
         }
         return _binding!!.root
     }

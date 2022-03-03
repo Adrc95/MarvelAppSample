@@ -7,14 +7,11 @@
         <import type="kotlin.jvm.functions.Function0" />
         <import type="kotlin.Unit" />
         <variable
-            name="action"
+            name="actionButton"
             type="Function0&lt;Unit>"/>
         <variable
             name="show"
-            type="Boolean" />
-        <variable
-            name="viewModel"
-            type="com.adrc95.marvelappsample.ui.main.MainViewModel" />
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +53,7 @@
             android:layout_marginTop="16dp"
             android:text="Try again"
             app:cornerRadius="20dp"
-            android:onClick="@{() -> action.invoke() }"
+            android:onClick="@{() -> actionButton.invoke() }"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
@@ -67,7 +64,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

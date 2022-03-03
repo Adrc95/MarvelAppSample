@@ -4,22 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.adrc95.marvelappsample.ui.common.ModeType"/>
+
+        <import type="com.adrc95.marvelappsample.ui.common.ModeType" />
+
+        <import type="kotlin.jvm.functions.Function1" />
+
+        <import type="kotlin.Unit" />
 
         <variable
-            name="viewModel"
-            type="com.adrc95.marvelappsample.ui.navhost.NavHostViewModel"
-            />
-        <variable
             name="data"
-            type="com.adrc95.marvelappsample.ui.navhost.NavHostMenuObservable"
-            />
+            type="com.adrc95.marvelappsample.ui.navhost.NavHostMenuObservable" />
+
+        <variable
+            name="onChangeTheme"
+            type="Function1&lt;ModeType, Unit>" />
     </data>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> viewModel.onChangeTheme(data.darkmode)}"
+        android:onClick="@{() ->  onChangeTheme.invoke(data.darkmode)}"
         android:clickable="true"
         android:focusable="true"
         app:visible="@{false}"
