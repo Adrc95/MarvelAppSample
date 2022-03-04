@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.adrc95.marvelappsample.R
 import com.adrc95.marvelappsample.databinding.ActivityNavHostBinding
 import com.adrc95.marvelappsample.databinding.MenuActionDarkmodeBinding
+import com.adrc95.marvelappsample.ui.common.ModeType
 import com.adrc95.marvelappsample.ui.common.launchAndCollect
 import com.adrc95.marvelappsample.ui.common.setVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,8 +67,11 @@ class NavHostActivity : AppCompatActivity() {
 
     private fun manageUiState(state : NavHostViewModel.NavHostUiState) {
         menuObservable.apply {
-            darkmode = state.mode
-            navHostState.onChangeTheme(state.mode)
+            if (state.oldMode != state.mode) {
+                darkmode = state.mode
+                navHostState.onChangeTheme(state.mode)
+                viewModel.changeOldMode(darkmode)
+            }
         }
     }
 

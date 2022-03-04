@@ -8,6 +8,7 @@ import com.adrc95.usecases.GetThemeMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,16 +25,22 @@ class NavHostViewModel @Inject constructor(private val changeThemeMode: ChangeTh
         }
     }
 
-    fun onChangeTheme(mode : ModeType) {
+    fun onChangeTheme() {
+        val modeType = uiState.value.mode
         viewModelScope.launch {
-            changeThemeMode.invoke(mode.value)
-            _uiState.value = NavHostUiState(mode)
+           val mode = if (modeType == ModeType.DAY) ModeType.NIGHT else ModeType.DAY
+           changeThemeMode.invoke(mode.value)
+           _uiState.update { it.copy(mode = mode)}
         }
     }
 
-    data class NavHostUiState(
-        val mode : ModeType? = null
-    )
+    fun changeOldMode(mode: ModeType) {
+        _uiState.update { it.copy(oldMode = mode) }
+    }
 
+    data class NavHostUiState(
+        val mode : ModeType = ModeType.AUTOMATIC,
+        val oldMode: ModeType? = null,
+    )
 
 }
