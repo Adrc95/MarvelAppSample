@@ -92,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:padding="0dp"
-                android:textColor="@color/black"
                 android:hint="@string/hint_search"
                 android:onTextChanged="@{(text, start, before, count) -> onSearchTextChanged.invoke(text)}" />
 
