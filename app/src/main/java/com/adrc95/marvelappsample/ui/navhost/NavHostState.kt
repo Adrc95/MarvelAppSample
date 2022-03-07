@@ -10,10 +10,10 @@ fun Activity.buildNavHostState(context: Context = this) = NavHostState(context)
 
 class NavHostState(private val context: Context) {
 
-    fun onChangeTheme(mode : ModeType) {
+    fun onChangeTheme(delegate: AppCompatDelegate, mode: ModeType) {
         when (mode) {
-         ModeType.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-         ModeType.DAY ->  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            ModeType.NIGHT -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+            ModeType.DAY -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
             else -> getAutomaticColor()
         }
     }

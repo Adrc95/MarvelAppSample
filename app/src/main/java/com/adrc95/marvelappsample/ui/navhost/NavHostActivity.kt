@@ -69,7 +69,7 @@ class NavHostActivity : AppCompatActivity() {
         menuObservable.apply {
             if (state.oldMode != state.mode) {
                 darkmode = state.mode
-                navHostState.onChangeTheme(state.mode)
+                navHostState.onChangeTheme(delegate, state.mode)
                 viewModel.changeOldMode(darkmode)
             }
         }
