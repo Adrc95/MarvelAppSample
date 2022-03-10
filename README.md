@@ -6,6 +6,7 @@ Este proyecto es una aplicación que permite mostrar la información de los pers
 - Descripción del personaje (En caso de estar disponible)
 - Lista de personajes favoritos (Almacenado en Base de Datos Local)
     - Borra un personaje de la lista de personaajes  al deslizar el elemento de derecha a izquierda
+- Modo Claro/Oscuro
   
 ## Configuración del proyecto
 
