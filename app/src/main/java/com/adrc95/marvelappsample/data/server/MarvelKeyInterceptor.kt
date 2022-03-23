@@ -4,7 +4,9 @@ import com.adrc95.marvelappsample.data.util.Utils.Companion.md5
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class MarvelKeyInterceptor(private val publicKey: String, private val privateKey : String) : Interceptor {
+class MarvelKeyInterceptor(private val publicKey: String, private val privateKey : String)
+    : Interceptor {
+
     companion object {
         private const val PARAM_API_KEY = "apikey"
         private const val PARAM_TS = "ts"

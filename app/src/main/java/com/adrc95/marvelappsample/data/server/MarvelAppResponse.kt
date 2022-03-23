@@ -12,13 +12,18 @@ data class CharacterDataWrapper(
     @SerialName("copyright")
     val copyright: String, //The copyright notice for the returned result.
     @SerialName("attributionText")
-    val attributionText : String, //The attribution notice for this result. Please display either this notice or the contents of the attributionHTML field on all screens which contain data from the Marvel Comics API.
+    //The attribution notice for this result. Please display either this notice or the contents
+    //of the attributionHTML field on all screens which contain data from the Marvel Comics API.
+    val attributionText: String,
     @SerialName("attributionHTML")
-    val attributionHTML : String, //An HTML representation of the attribution notice for this result. Please display either this notice or the contents of the attributionText field on all screens which contain data from the Marvel Comics API.
+    //An HTML representation of the attribution notice for this result. Please display either
+    //this notice or the contents of the attributionText field on all screens which contain data
+    //from the Marvel Comics API.
+    val attributionHTML: String,
     @SerialName("data")
-    val characterDataContainer : CharacterDataContainer, //The results returned by the call.
+    val characterDataContainer: CharacterDataContainer, //The results returned by the call.
     @SerialName("etag")
-    val etag : String //A digest value of the content returned by the call.
+    val etag: String //A digest value of the content returned by the call.
 )
 
 @Serializable
@@ -74,7 +79,9 @@ data class Image(
 @Serializable
 data class ComicList(
     @SerialName("available")
-    val available: Int, //The number of total available issues in this list. Will always be greater than or equal to the "returned" value.
+    //The number of total available issues in this list. Will always be greater than or equal to
+    //the "returned" value.
+    val available: Int,
     @SerialName("returned")
     val returned: Int, //The number of issues returned in this collection (up to 20).
     @SerialName("collectionURI")

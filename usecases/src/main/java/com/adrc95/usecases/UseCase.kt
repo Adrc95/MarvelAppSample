@@ -2,7 +2,11 @@ package com.adrc95.usecases
 
 import arrow.core.Either
 import com.adrc95.data.exception.Failure
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).

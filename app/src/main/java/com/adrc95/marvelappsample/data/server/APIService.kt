@@ -18,15 +18,21 @@ open class APIService<T> constructor(
 ) {
     var service: T
 
+    companion object {
+        private const val READ_TIMEOUT = 30L
+        private const val WRITE_TIMEOUT = 30L
+        private const val CONNECT_TIMEOUT = 30L
+    }
+
     init {
         service = initApiService().create(serviceClass)
     }
 
     private fun initApiService(): Retrofit {
         val client = OkHttpClient.Builder()
-        client.readTimeout(30, TimeUnit.SECONDS)
-        client.writeTimeout(30, TimeUnit.SECONDS)
-        client.connectTimeout(30, TimeUnit.SECONDS)
+        client.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+        client.writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+        client.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
 
         interceptors.map { client.addInterceptor(it) }
 
@@ -50,5 +56,4 @@ open class APIService<T> constructor(
             is HttpException -> Either.Left(Failure.ServerError)
             else -> Either.Left(Failure.UnknownRemoteError)
         }
-
 }

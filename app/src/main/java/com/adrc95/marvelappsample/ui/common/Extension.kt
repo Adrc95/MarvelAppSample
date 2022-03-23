@@ -4,23 +4,30 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
-import androidx.recyclerview.widget.*
-import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
-import com.bumptech.glide.Glide
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 

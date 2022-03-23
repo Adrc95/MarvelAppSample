@@ -17,5 +17,4 @@ object DateSerializer : KSerializer<Date> {
     override fun deserialize(decoder: Decoder): Date {
         return Date(decoder.decodeString().toLong())
     }
-
 }

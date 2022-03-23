@@ -45,8 +45,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesMarvelKeyInterceptor (@Named("publicKey") publicKey: String, @Named("privateKey") privateKey: String): MarvelKeyInterceptor
-    = MarvelKeyInterceptor(publicKey, privateKey)
+    fun providesMarvelKeyInterceptor (@Named("publicKey") publicKey: String,
+                                      @Named("privateKey") privateKey: String)
+    : MarvelKeyInterceptor = MarvelKeyInterceptor(publicKey, privateKey)
 
     @ExperimentalSerializationApi
     @Provides

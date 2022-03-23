@@ -1,5 +1,6 @@
 package com.adrc95.marvelappsample.ui.common
 
+@Suppress("MagicNumber")
 enum class ModeType(val value: Int) {
     DAY(1),
     NIGHT(2),

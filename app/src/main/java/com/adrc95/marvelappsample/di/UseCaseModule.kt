@@ -2,7 +2,12 @@ package com.adrc95.marvelappsample.di
 
 import com.adrc95.data.repository.CharactersRepository
 import com.adrc95.data.repository.ConfigurationRepository
-import com.adrc95.usecases.*
+import com.adrc95.usecases.ChangeThemeMode
+import com.adrc95.usecases.FavoriteCharacter
+import com.adrc95.usecases.GetCharacter
+import com.adrc95.usecases.GetCharacters
+import com.adrc95.usecases.GetFavoriteCharacters
+import com.adrc95.usecases.GetThemeMode
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +37,6 @@ object UseCaseModule {
         GetThemeMode(localConfigurationRepository)
 
     @Provides
-    fun providesChangeThemeMode(localConfigurationRepository: ConfigurationRepository): ChangeThemeMode =
-        ChangeThemeMode(localConfigurationRepository)
+    fun providesChangeThemeMode(localConfigurationRepository: ConfigurationRepository)
+    : ChangeThemeMode = ChangeThemeMode(localConfigurationRepository)
 }

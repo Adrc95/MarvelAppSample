@@ -1,7 +1,12 @@
 package com.adrc95.marvelappsample.ui.detail
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.adrc95.marvelappsample.ui.navhost.NavHostActivity
 import com.adrc95.marvelappsample.R

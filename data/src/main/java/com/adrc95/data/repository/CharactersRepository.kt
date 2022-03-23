@@ -15,7 +15,8 @@ interface CharactersRepository {
 }
 
 class CharactersRepositoryImpl(private val remoteCharactersDataSource: RemoteCharactersDataSource,
-                               private  val localCharactersDataSource : LocalCharactersDataSource) : CharactersRepository {
+                               private  val localCharactersDataSource : LocalCharactersDataSource)
+    : CharactersRepository {
 
     override suspend fun getCharacters(limit: Int, offset: Int): Either<Failure, List<Character>> =
         remoteCharactersDataSource.getCharacters(limit, offset)
